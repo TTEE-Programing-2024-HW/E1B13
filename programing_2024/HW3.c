@@ -2,19 +2,18 @@
 #include<stdlib.h>
 #include<conio.h>
 #include<time.h>
-#include <stdbool.h>
 
-// 函數原型聲明
-void clearScreen();
-void u_wantseat();
-void like();
-void seat();
-void watch_seat();
-void want_seat();
-void want_seat2();
+// void 
+void clearScreen();//clear 
+void u_wantseat();//c.
+void like();//yes or no
+void seat();//a. seat
+void watch_seat();//look now ur seat
+void want_seat();//b.
+void want_seat2();//c.
 
 char sit[9][9];
-bool seat_reserved[9][9] = {false}; //save u want seat value
+int seat_reserved[9][9] = {0}; //save u want seat value
 
 void clearScreen() {
     system("CLS||clear");
@@ -34,7 +33,7 @@ void u_wantseat() {
         }
         else if(sit[row - 1][col - 1] == '-') {
             sit[row - 1][col - 1] = '@';
-            seat_reserved[row - 1][col - 1] = true; // point u save seat
+            seat_reserved[row - 1][col - 1] = 1; // point u save seat
             watch_seat();
             printf("\nOK?(y/n)\n");
             like();
@@ -60,7 +59,7 @@ void like() {
                 for (int j = 0; j < 9; j++) {
                     if (sit[i][j] == '@') {
                         sit[i][j] = '-';
-                        seat_reserved[i][j] = false;
+                        seat_reserved[i][j] = 0;
                     }
                 }
             }
@@ -126,7 +125,7 @@ void want_seat() {
         startCol = rand() % 9;
         for (i = 0; i < need; i++) {
             sit[startRow + i][startCol] = '@';
-            seat_reserved[startRow + i][startCol] = true; // point save seat
+            seat_reserved[startRow + i][startCol] = 1; // point save seat
         }
     }
     else if (need == 4) {
@@ -137,7 +136,7 @@ void want_seat() {
             startRow = rand() % 9;
             for (i = 0; i < 4; i++) {
                 sit[startRow][startCol + i] = '@';
-                seat_reserved[startRow][startCol + i] = true; // point save seat
+                seat_reserved[startRow][startCol + i] = 1; // point save seat
             }
         } else {
             startRow = rand() % 8;
@@ -145,8 +144,8 @@ void want_seat() {
             for (i = 0; i < 2; i++) {
                 sit[startRow][startCol + i] = '@';
                 sit[startRow + 1][startCol + i] = '@';
-                seat_reserved[startRow][startCol + i] = true; // point save seat
-                seat_reserved[startRow + 1][startCol + i] = true; // point save seat
+                seat_reserved[startRow][startCol + i] = 1; // point save seat
+                seat_reserved[startRow + 1][startCol + i] = 1; // point save seat
             }
         }
     }
