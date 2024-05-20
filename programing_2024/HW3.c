@@ -14,7 +14,7 @@ void want_seat();
 void want_seat2();
 
 char sit[9][9];
-bool seat_reserved[9][9] = {false}; //儲存座位預訂情況的數組
+bool seat_reserved[9][9] = {false}; //save u want seat value
 
 void clearScreen() {
     system("CLS||clear");
@@ -23,27 +23,27 @@ void clearScreen() {
 void u_wantseat() {
     watch_seat();
     int row, col;
-    printf("\n選擇你想要的座位:");
+    printf("\n u want seat:");
     do {
         scanf("%d-%d", &row, &col);
         if (row < 1 || row > 9 || col < 1 || col > 9) {
-            printf("\n格式錯誤，重新輸入:");
+            printf("\nERROR:");
         }
         else if (sit[row - 1][col - 1] == '@' || sit[row - 1][col - 1] == '*') {
-            printf("\n該座位已被預訂，請重新輸入:");
+            printf("\nthe seat not space，try:");
         }
         else if(sit[row - 1][col - 1] == '-') {
             sit[row - 1][col - 1] = '@';
-            seat_reserved[row - 1][col - 1] = true; // 標記座位為已預訂
+            seat_reserved[row - 1][col - 1] = true; // point u save seat
             watch_seat();
-            printf("\n確認無誤?(y/n)\n");
+            printf("\nOK?(y/n)\n");
             like();
             getchar(); 
             clearScreen();
             break;
         }
         else{
-            printf("不要再亂打了");
+            printf("dont do that");
         }
     } while (1);
 }
@@ -55,7 +55,7 @@ void like() {
         getchar();
         clearScreen();
     }
-    else {// 清除當前座位安排
+    else {// clear now seat
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     if (sit[i][j] == '@') {
@@ -86,7 +86,7 @@ void seat() {
 
 void watch_seat() {
     int i, j;
-    printf("座位情况：\n");
+    printf("now seat：\n");
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 9; j++) {
             if (seat_reserved[i][j]) {
@@ -101,7 +101,7 @@ void watch_seat() {
 
 void watch_seat2() {
     int i, j;
-    printf("座位情况：\n");
+    printf("now seat：\n");
     for (i = 0; i < 9; i++) {
         for (j = 0; j < 9; j++) {
             if (seat_reserved[i][j]) {
@@ -116,17 +116,17 @@ void watch_seat2() {
 
 
 void want_seat() {
-    seat(); // 清除座位並重新分配座位
+    seat(); // clear seat and re seat
     int i, j, k, l;
     int need, startRow, startCol;
-    printf("需要幾個座位（1~4）?\n");
+    printf("how many seats（1~4）?\n");
     scanf("%d", &need);
     if (need > 0 && need < 4) {
         startRow = rand() % (9 - need + 1);
         startCol = rand() % 9;
         for (i = 0; i < need; i++) {
             sit[startRow + i][startCol] = '@';
-            seat_reserved[startRow + i][startCol] = true; // 標記座位為已預訂
+            seat_reserved[startRow + i][startCol] = true; // point save seat
         }
     }
     else if (need == 4) {
@@ -137,7 +137,7 @@ void want_seat() {
             startRow = rand() % 9;
             for (i = 0; i < 4; i++) {
                 sit[startRow][startCol + i] = '@';
-                seat_reserved[startRow][startCol + i] = true; // 標記座位為已預訂
+                seat_reserved[startRow][startCol + i] = true; // point save seat
             }
         } else {
             startRow = rand() % 8;
@@ -145,23 +145,23 @@ void want_seat() {
             for (i = 0; i < 2; i++) {
                 sit[startRow][startCol + i] = '@';
                 sit[startRow + 1][startCol + i] = '@';
-                seat_reserved[startRow][startCol + i] = true; // 標記座位為已預訂
-                seat_reserved[startRow + 1][startCol + i] = true; // 標記座位為已預訂
+                seat_reserved[startRow][startCol + i] = true; // point save seat
+                seat_reserved[startRow + 1][startCol + i] = true; // point save seat
             }
         }
     }
     else {
-        printf("你是不是SB?\n");
+        printf("are u sure?\n");
         return;
     }
-    watch_seat2(); // 顯示預訂座位
+    watch_seat2(); // show seat
 }
 
 
 int main(void) {
     int pw, error = 0;
 
-    seat(); // 初始化座位表
+    seat(); // re 0 seat
 
     printf("口口口口口口口口口口口口口口口口口口口口口\n");
     printf("E 1 B 1 3\n");
@@ -186,7 +186,7 @@ int main(void) {
     printf("                 -----               ");
     printf("\n");
 
-    printf("輸入密碼");
+    printf("password");
     while (error < 3) {
         printf(":");
         scanf("%d", &pw);
@@ -204,17 +204,17 @@ int main(void) {
                 scanf(" %c", &R);
                 switch (R) {
                     case 'a':
-                        watch_seat(); // 顯示座位表
-                        printf("按任意键返回主菜單...\n");
+                        watch_seat(); //show seat
+                        printf("enter...\n");
                         getchar();
                         getchar();
                         clearScreen();
                         break;
                     case 'b':
                         want_seat();
-                        printf("\n你喜歡嗎?(y/n)\n");
+                        printf("\nlike it?(y/n)\n");
                         like();
-                        printf("按任意键返回主菜单...\n");
+                        printf("enter...\n");
                         getchar();
                         getchar();
                         clearScreen();
@@ -233,7 +233,7 @@ int main(void) {
                         clearScreen();
                         break;
                     default:
-                        printf("有問題嗎?叫你選a b c d其中一個選項 你給我選什麼東西?\n");
+                        printf("what are u doing?\n");
                         getchar();
                         getchar();
                         clearScreen();
@@ -243,10 +243,10 @@ int main(void) {
         else if (pw != 2024) {
             error++;
             if (error < 3) {
-                printf("\n輸入錯誤，重新輸入\n");
+                printf("\nworng\n");
             }
             else {
-                printf("錯誤三次達上限");
+                printf("three error and END");
                 getchar();
                 break;
             }
